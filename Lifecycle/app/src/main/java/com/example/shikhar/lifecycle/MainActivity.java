@@ -9,16 +9,26 @@ import android.widget.TextView;
 
 
 public class MainActivity extends ActionBarActivity {
+
     private TextView textView;
+
     @Override
-  protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        textView = (TextView)findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.textView);
+        if(savedInstanceState !=null) {
+            textView.setText(savedInstanceState.getCharSequence("myText"));
+        }
         textView.append("Create\n");
+
     }
 
-
+    @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState){
+        savedInstanceState.putCharSequence("myText",textView.getText());
+        super.onSaveInstanceState(savedInstanceState);
+    }
 
     @Override
     protected void onStart() {
@@ -57,8 +67,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+
+        @Override
+        public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
